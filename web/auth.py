@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask import Blueprint, make_response, render_template, request, flash, redirect, url_for
 from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
@@ -65,8 +65,28 @@ def sign_up():
             return redirect(url_for('views.home'))
 
 
-
-
     return render_template("sign_up.html", user=current_user)
+
+
+@auth.route('/graph')
+def graph():
+    data=[
+        ("2008", 1597),
+        ("2009", 1456),
+        ("2010", 1908),
+        ("2011", 896),
+        ("2012", 755),
+        ("2013", 453),
+        ("2014", 1100),
+        ("2015", 235),
+        ("2016", 1478),
+    ]
+
+    labels=[row[0]for row in data]
+    values=[row[1]for row in data]
+
+    return render_template("graph.html", labels=labels, values=values)
+
+
 
 
